@@ -93,10 +93,11 @@ export default function Dashboard() {
     fetchInterviews(1, false)
   }
 
+  // Unique values based on actualRound only
   const uniqueClients = Array.from(new Set(interviews.map((i) => i["End Client"])))
   const uniqueRounds = Array.from(new Set(interviews.map((i) => i["actualRound"])))
 
-  // Calculate filtered interviews for table & round counts
+  // Consistently filter interviews and round counts by actualRound
   const filteredInterviews = useMemo(
     () =>
       interviews.filter((interview) =>
@@ -105,7 +106,6 @@ export default function Dashboard() {
     [interviews, excludeRounds]
   )
 
-  // Calculate counts for each unique round in filteredInterviews
   const roundCounts = useMemo(() => {
     const counts: Record<string, number> = {}
     filteredInterviews.forEach(interview => {
@@ -157,7 +157,7 @@ export default function Dashboard() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Interviews ({totalCount})</h1>
+          <h1 className="text-3xl font-bold text-white mb-2">Interviews ({filteredInterviews.length})</h1>
           <p className="text-slate-400">Manage and track interview schedules with advanced filters</p>
         </div>
 
